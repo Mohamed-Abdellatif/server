@@ -52,9 +52,12 @@ export const editAnnouncement = async ({ announcementId, update }: EditAnnouncem
   }
 };
 
-export const getAllAnnouncements = async () => {
+export const getRecentAnnouncements = async () => {
   try {
-    const announcements = await announcementModel.find({}).lean();
+    const announcements = await announcementModel.find({})
+      .sort({ createdAt: -1 })
+      .limit(4)
+      .lean();
     return announcements;
   } catch (error) {
     console.error("Failed to get all announcements:", error);

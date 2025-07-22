@@ -6,7 +6,7 @@ export const seedInitialAnnouncements = async () => {
     {
       name: "Mr.Ahmed Mostafa",
       subject: "Math 101",
-      avatar: "A",
+      avatar: "https://randomuser.me/api/portraits/men/45.jpg",
       message:
         "Hi my hero! I just want you ready to our exams and focus on remaining assessments to gain more grades, good luck my warriors! 😊",
     },
@@ -27,7 +27,7 @@ export const seedInitialAnnouncements = async () => {
     {
       name: "Events Manager",
       subject: "Events",
-      avatar: "E",
+      avatar: "https://randomuser.me/api/portraits/men/75.jpg",
       message:
         "Hello! Can’t wait for our upcoming trip on the next weekend. The trip will be to Dreampark and Pyramids. To book your seat please contact your class teacher.",
     },

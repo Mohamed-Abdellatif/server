@@ -1,13 +1,14 @@
 import express from "express";
 import {
   getAnnouncementForUser,
-  getAllAnnouncements,
+  getRecentAnnouncements,
   deleteAnnouncement,
   editAnnouncement,
   addAnnouncement,
 } from "../services/announcementService";
 import validateJWT from "../middlewares/validateJWT";
 import { announcementModel } from "../models/announcementModel";
+import { io } from "../index";
 
 const router = express.Router();
 
@@ -22,10 +23,10 @@ router.get("/:announcementId", validateJWT, async (req, res) => {
   }
 });
 
-// Get all announcements
+// Get recent announcements
 router.get("/", validateJWT, async (req, res) => {
   try {
-    const announcements = await getAllAnnouncements();
+    const announcements = await getRecentAnnouncements();
     res.status(200).send(announcements);
   } catch {
     res.status(500).send("Something went wrong");
@@ -36,7 +37,13 @@ router.get("/", validateJWT, async (req, res) => {
 router.post("/", validateJWT, async (req, res) => {
   try {
     const { name, subject, avatar, message } = req.body;
-    const announcement = await addAnnouncement({ name, subject, avatar, message });
+    const announcement = await addAnnouncement({
+      name,
+      subject,
+      avatar,
+      message,
+    });
+    io.emit("announcement:new", announcement); // Emit to all clients
     res.status(201).send(announcement);
   } catch {
     res.status(500).send("Something went wrong");

@@ -12,6 +12,8 @@ const announcementSchema = new Schema<IAnnouncement>({
   subject: { type: String, required: true },
   avatar: { type: String, required: true },
   message: { type: String, required: true },
+}, {
+  timestamps: { createdAt: true, updatedAt: false }
 });
 
 export const announcementModel = mongoose.model<IAnnouncement>(
