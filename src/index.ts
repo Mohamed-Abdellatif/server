@@ -1,8 +1,13 @@
 import express from "express";
 import mongoose from "mongoose";
+import dotenv from 'dotenv';
 import userRoute from "./routes/userRoute";
 import announcementRoute from "./routes/announcementRoute";
 import quizRoute from "./routes/quizRoute"
+
+
+dotenv.config();
+
 
 const app = express();
 const port = 3001;
