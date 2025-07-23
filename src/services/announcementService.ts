@@ -38,13 +38,18 @@ interface EditAnnouncementParams {
   }>;
 }
 
-export const editAnnouncement = async ({ announcementId, update }: EditAnnouncementParams) => {
+export const editAnnouncement = async ({
+  announcementId,
+  update,
+}: EditAnnouncementParams) => {
   try {
-    const updated = await announcementModel.findByIdAndUpdate(
-      announcementId,
-      { $set: update },
-      { new: true, runValidators: true }
-    ).lean();
+    const updated = await announcementModel
+      .findByIdAndUpdate(
+        announcementId,
+        { $set: update },
+        { new: true, runValidators: true }
+      )
+      .lean();
     return updated; // null if not found
   } catch (error) {
     console.error("Failed to edit announcement:", error);
@@ -54,7 +59,8 @@ export const editAnnouncement = async ({ announcementId, update }: EditAnnouncem
 
 export const getRecentAnnouncements = async () => {
   try {
-    const announcements = await announcementModel.find({})
+    const announcements = await announcementModel
+      .find({})
       .sort({ createdAt: -1 })
       .limit(4)
       .lean();
@@ -65,6 +71,15 @@ export const getRecentAnnouncements = async () => {
   }
 };
 
+export const getAllAnnouncements = async () => {
+  try {
+    const announcements = await announcementModel.find({}).lean();
+    return announcements;
+  } catch (error) {
+    console.error("Failed to get all announcements:", error);
+    throw new Error("Failed to fetch announcements");
+  }
+};
 interface AddAnnouncementParams {
   name: string;
   subject: string;
@@ -72,9 +87,19 @@ interface AddAnnouncementParams {
   message: string;
 }
 
-export const addAnnouncement = async ({ name, subject, avatar, message }: AddAnnouncementParams) => {
+export const addAnnouncement = async ({
+  name,
+  subject,
+  avatar,
+  message,
+}: AddAnnouncementParams) => {
   try {
-    const announcement = await announcementModel.create({ name, subject, avatar, message });
+    const announcement = await announcementModel.create({
+      name,
+      subject,
+      avatar,
+      message,
+    });
     return announcement;
   } catch (error) {
     console.error("Failed to add announcement:", error);

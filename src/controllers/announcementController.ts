@@ -5,6 +5,7 @@ import {
   deleteAnnouncement as deleteAnnouncementService,
   editAnnouncement as editAnnouncementService,
   addAnnouncement as addAnnouncementService,
+  getAllAnnouncements as getAllAnnouncementsService,
 } from "../services/announcementService";
 import { io } from "../index";
 
@@ -27,10 +28,24 @@ export const getRecentAnnouncements = async (req: Request, res: Response) => {
   }
 };
 
+export const getAllAnnouncements = async (req: Request, res: Response) => {
+  try {
+    const announcements = await getAllAnnouncementsService();
+    res.status(200).send(announcements);
+  } catch {
+    res.status(500).send("Something went wrong");
+  }
+};
+
 export const addAnnouncement = async (req: Request, res: Response) => {
   try {
     const { name, subject, avatar, message } = req.body;
-    const announcement = await addAnnouncementService({ name, subject, avatar, message });
+    const announcement = await addAnnouncementService({
+      name,
+      subject,
+      avatar,
+      message,
+    });
     io.emit("announcement:new", announcement); // Emit to all clients
     res.status(201).send(announcement);
   } catch {
@@ -65,4 +80,4 @@ export const editAnnouncement = async (req: Request, res: Response) => {
   } catch {
     res.status(500).send("Something went wrong");
   }
-}; 
+};

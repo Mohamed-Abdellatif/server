@@ -4,7 +4,8 @@ import {
   getRecentAnnouncements,
   addAnnouncement,
   deleteAnnouncement,
-  editAnnouncement
+  editAnnouncement,
+  getAllAnnouncements,
 } from "../controllers/announcementController";
 import validateJWT from "../middlewares/validateJWT";
 import { announcementModel } from "../models/announcementModel";
@@ -12,14 +13,16 @@ import { io } from "../index";
 
 const router = express.Router();
 
-// Get announcement by id
-router.get("/:announcementId", validateJWT, getAnnouncementById);
-
+router.get("/all", validateJWT, getAllAnnouncements);
 // Get recent announcements
 router.get("/", validateJWT, getRecentAnnouncements);
 
+router.get("/:announcementId", validateJWT, getAnnouncementById);
+
 // Add a new announcement
 router.post("/", validateJWT, addAnnouncement);
+
+// Get announcement by id
 
 // Delete an announcement by ID
 router.delete("/:announcementId", validateJWT, deleteAnnouncement);
