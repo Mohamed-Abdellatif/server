@@ -2,6 +2,10 @@
 
 [![Watch the demo](https://img.youtube.com/vi/Njk6LgsVawk/maxresdefault.jpg)](https://youtu.be/Njk6LgsVawk)
 
+## 🚀 Live Server
+
+[https://server-production-5017.up.railway.app](https://server-production-5017.up.railway.app)
+
 A robust backend API for the Anyware Software Full Stack Challenge. This service powers authentication, announcements, user management, quizzes, and more for the student portal application.
 
 ---
